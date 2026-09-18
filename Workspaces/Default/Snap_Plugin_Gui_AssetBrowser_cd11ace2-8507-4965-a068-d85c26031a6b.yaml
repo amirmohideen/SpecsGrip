@@ -1,7 +1,7 @@
 CollapsedEntities:
   type: stringset
   value:
-    size: 536
+    size: 539
     values:
       - Device Camera Texture.deviceCameraTexture
       - Echopark.hdr
@@ -11,8 +11,10 @@ CollapsedEntities:
       - Scene.scene
       - Scripts
       - Scripts/HandBridge.ts
+      - SettingsPanel_Frame.lspkg
       - SettingsPanel_Frame.lspkg/SettingsPanel_Frame.prefab
       - SettingsPanel_Frame.lspkg/package_dependencies.json
+      - SpectaclesInteractionKit.lspkg
       - SpectaclesInteractionKit.lspkg/Assets/Audio
       - SpectaclesInteractionKit.lspkg/Assets/Audio/HoverAudioTrack.wav
       - SpectaclesInteractionKit.lspkg/Assets/Audio/TriggerEndAudioTrack.wav
@@ -409,6 +411,7 @@ CollapsedEntities:
       - SpectaclesInteractionKit.lspkg/VersionNumber.ts
       - SpectaclesInteractionKit.lspkg/package.native
       - SpectaclesInteractionKit.lspkg/tsconfig.json
+      - SpectaclesUIKit.lspkg
       - SpectaclesUIKit.lspkg/Audio
       - SpectaclesUIKit.lspkg/Audio/HoverAudioTrack.wav
       - SpectaclesUIKit.lspkg/Audio/SliderProgressionAudioTrack.wav
