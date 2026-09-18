@@ -219,7 +219,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: 9acd483c-d086-218e-9d9b-49e67cef81ef/7ac0a2c35a874a66f842171c0f16e9e7/Data/6a992e8/CapsuleButtonPinched.glsl
+      ShaderPath: 9acd483c-d086-218e-9d9b-49e67cef81ef/7ac0a2c35a874a66f842171c0f16e9e7/Data/24936a5/CapsuleButtonPinched.glsl
       Defines:
         []
       Properties:

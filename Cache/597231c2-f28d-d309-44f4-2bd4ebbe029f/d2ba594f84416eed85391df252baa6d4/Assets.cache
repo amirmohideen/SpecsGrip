@@ -335,7 +335,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: 597231c2-f28d-d309-44f4-2bd4ebbe029f/d2ba594f84416eed85391df252baa6d4/Data/6a992e8/FingerHighlightAdd.glsl
+      ShaderPath: 597231c2-f28d-d309-44f4-2bd4ebbe029f/d2ba594f84416eed85391df252baa6d4/Data/24936a5/FingerHighlightAdd.glsl
       Defines:
         []
       Properties:

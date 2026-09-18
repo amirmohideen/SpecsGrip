@@ -68,7 +68,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: bceca019-1354-20b9-e73d-dc1c377ea600/60c8728800e7bee8e7cd67016e331282/Data/6a992e8/NoDraw.glsl
+      ShaderPath: bceca019-1354-20b9-e73d-dc1c377ea600/60c8728800e7bee8e7cd67016e331282/Data/24936a5/NoDraw.glsl
       Defines:
         []
       Properties:

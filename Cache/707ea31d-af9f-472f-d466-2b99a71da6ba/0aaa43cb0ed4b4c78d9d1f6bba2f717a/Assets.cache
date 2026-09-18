@@ -928,7 +928,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: 707ea31d-af9f-472f-d466-2b99a71da6ba/0aaa43cb0ed4b4c78d9d1f6bba2f717a/Data/6a992e8/PinchButton-Default.glsl
+      ShaderPath: 707ea31d-af9f-472f-d466-2b99a71da6ba/0aaa43cb0ed4b4c78d9d1f6bba2f717a/Data/24936a5/PinchButton-Default.glsl
       Defines:
         []
       Properties:

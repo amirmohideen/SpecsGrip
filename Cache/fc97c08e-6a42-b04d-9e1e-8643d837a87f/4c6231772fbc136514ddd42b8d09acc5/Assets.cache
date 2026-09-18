@@ -131,7 +131,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: fc97c08e-6a42-b04d-9e1e-8643d837a87f/4c6231772fbc136514ddd42b8d09acc5/Data/6a992e8/ScaleBasedTargetOutline.glsl
+      ShaderPath: fc97c08e-6a42-b04d-9e1e-8643d837a87f/4c6231772fbc136514ddd42b8d09acc5/Data/24936a5/ScaleBasedTargetOutline.glsl
       Defines:
         []
       Properties:

@@ -9,9 +9,10 @@ Spectacles (Lens)          this PC                         gripper
        ~60 Hz               DGSDK.dll / MoveServoJoint()      (Modbus TCP)
 ```
 
-## What your setup actually is
+## Reference setup
 
-Discovered from your machine, not assumed:
+What this was built and tested against. Every value was read off the real hardware
+and DGManager's own files, not assumed:
 
 | | |
 |---|---|
@@ -20,7 +21,7 @@ Discovered from your machine, not assumed:
 | Control mode | **DEVELOPER** (`controlMode: 1`) — required by `MoveServoJoint()` |
 | Joints | 20 = 5 fingers × 4 |
 | SDK | `C:\TESOLLO\DGManager\resources\libs\DGSDK.dll`, v2.0.0, x64, `extern "C"` |
-| Your Wi-Fi IP | `192.168.124.7` (this is what the Lens connects to) |
+| PC's Wi-Fi IP | whatever `py netcheck.py` prints — this is what the Lens connects to, and it changes with the network |
 
 **"Ready" in DGManager is `SystemStart()`.** Until it runs the gripper accepts no
 motion commands. `bridge.py` calls it for you during startup.
@@ -99,7 +100,7 @@ Spectacles and the PC must be on the **same Wi-Fi network**.
 > or you'll get `can't open file ... bridge.py: [Errno 2] No such file or directory`:
 >
 > ```powershell
-> cd C:\Users\knoxl\Music\RobotHand\bridge
+> cd path\to\SpecsGrip\bridge
 > ```
 >
 > (Or stay in the project root and prefix the path: `py bridge\bridge.py --dry-run`.)

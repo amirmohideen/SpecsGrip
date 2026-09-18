@@ -560,7 +560,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: 637d01a7-6996-f7a7-a608-a817c4b113f2/fee0d856fec8c4c618f5b28fcd627c51/Data/6a992e8/SpritePreset.glsl
+      ShaderPath: 637d01a7-6996-f7a7-a608-a817c4b113f2/fee0d856fec8c4c618f5b28fcd627c51/Data/24936a5/SpritePreset.glsl
       Defines:
         []
       Properties:

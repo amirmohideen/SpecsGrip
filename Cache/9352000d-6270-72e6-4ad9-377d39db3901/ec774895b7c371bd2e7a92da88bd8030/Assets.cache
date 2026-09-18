@@ -151,7 +151,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: 9352000d-6270-72e6-4ad9-377d39db3901/ec774895b7c371bd2e7a92da88bd8030/Data/6a992e8/Slider_Platform.glsl
+      ShaderPath: 9352000d-6270-72e6-4ad9-377d39db3901/ec774895b7c371bd2e7a92da88bd8030/Data/24936a5/Slider_Platform.glsl
       Defines:
         []
       Properties:
