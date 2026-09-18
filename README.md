@@ -1,8 +1,8 @@
 <h1 align="center">🦾 SpecsGrip</h1>
 
 <p align="center">
-  Control a <b>Tesollo Delto DG-5F robot hand</b> with your bare hands through <b>Snap Spectacles!</b><br>
-  SpecsGrip reads every finger joint from Spectacles hand tracking and streams it to a small bridge on your PC, which drives all 20 joints of the robot hand in real time - no gloves, no controllers, just your hand.
+  Control a <b>Tesollo Delto DG-5F robot hand</b> with your bare hands using <b>Snap Spectacles!</b><br>
+  Spectacles tracks your fingers. A small program on your PC moves the robot's fingers to match - live, with no gloves or controllers.
 </p>
 
 <p align="center">
@@ -31,13 +31,13 @@
 
 | Feature | Description |
 | :--- | :--- |
-| 🖐️ **Bare-hand teleoperation** | Your fingers drive the robot's fingers directly - curl, spread and thumb opposition across all 20 joints. |
-| ⚡ **Real time** | Hand data streams at 60 Hz into the gripper's real-time servo command, so the robot follows as you move. |
-| 🔀 **Either hand** | Drive the right-handed robot with your right hand, or your left - left-hand input is mirrored automatically. Auto-switch follows whichever hand is in view. |
-| 🛡️ **Safety first** | Starts disarmed, clamps every joint to factory-proven limits, caps joint speed, and freezes in place if the signal drops. |
-| 🤖 **On-lens debug panel** | A colour-coded status readout inside the Lens: connection state, packets sent, tracking, and the last error - so you're never debugging blind on the glasses. |
-| 🎛️ **Tune without rebuilding** | All scaling, limits and smoothing live in one `config.json` on the PC. Edit, restart the bridge in 2 seconds - no Lens rebuild or re-push. |
-| 📦 **Zero dependencies** | The bridge is plain Python standard library. No `pip install`. |
+| 🖐️ **Bare-hand control** | Bend your fingers, spread them or move your thumb, and the robot copies you. All 20 joints. |
+| ⚡ **Live** | Your hand is sent 60 times a second, so the robot keeps up as you move. |
+| 🔀 **Either hand** | Use your right or left hand. Auto switch follows whichever hand you're showing. |
+| 🛡️ **Built-in safety** | Nothing moves until you arm it. Joints stay inside safe limits, can't move too fast, and hold still if the connection drops. |
+| 🤖 **Debug panel** | Shows the connection status inside the Lens, so you can see what's wrong right on the glasses. |
+| 🎛️ **Easy tuning** | All settings live in one file on your PC. Change it and restart - no need to rebuild the Lens. |
+| 📦 **Nothing to install** | The PC program only needs Python. No extra packages. |
 
 ---
 
@@ -46,13 +46,12 @@
 
 | Device | Type | Status | Notes |
 | :--- | :--- | :--- | :--- |
-| **Spectacles (2024)** | Glasses | ✅ Supported | Camera-based hand tracking: keep your hand in view and in reasonable light. |
+| **Spectacles (2024)** | Glasses | ✅ Supported | Keep your hand in view and in good light. |
 | **Specs (2026)** | Glasses | ⚠️ Need to test | — |
-| **Delto DG-5F-R** (right) | Robot hand | ✅ Supported (DGSDK 2.0.0, firmware 769) | The reference hardware. |
-| **Delto DG-5F-L** (left) | Robot hand | ⚠️ Need to test | Set `model` to `24338` (`0x5F12`) in `config.json`; abduction limits likely need mirroring. |
-| **Delto DG-5F-S variants** | Robot hand | ⚠️ Need to test | — |
-| **Windows PC** | Bridge host | ✅ Supported (tested on Windows 11) | Needs Tesollo **DGManager** installed - the bridge drives its `DGSDK.dll`. |
-| **macOS / Linux** | Bridge host | ❌ Not supported yet | Tesollo ships a Linux `.so`, but the bridge currently loads the Windows DLL and uses Windows-only APIs. |
+| **Delto DG-5F-R** (right) | Robot hand | ✅ Supported | Tested with DGSDK 2.0.0, firmware 769. |
+| **Other DG-5F models** (left, S) | Robot hand | ⚠️ Need to test | Will need changes in `config.json`. |
+| **Windows PC** | Runs the bridge | ✅ Supported | Tested on Windows 11. Needs Tesollo **DGManager** installed. |
+| **Mac / Linux** | Runs the bridge | ❌ Not yet | The bridge uses Windows-only parts of Tesollo's software. |
 
 ---
 
@@ -60,37 +59,29 @@
 ## 🚀 Setup & Guide
 
 <details open>
-<summary><b>🦾 Full Setup (Spectacles + Robot Hand)</b></summary>
+<summary><b>🦾 Full Setup</b></summary>
 <br>
 
-**What you need**
-
-| | |
-| :--- | :--- |
-| 🦾 **Delto DG-5F-R** | Connected to your PC by Ethernet |
-| 💻 **Windows PC** | With Tesollo **DGManager** installed (the bridge uses the `DGSDK.dll` that ships inside it) |
-| 🐍 **Python 3** | Tested on 3.13. Standard library only |
-| 👓 **Spectacles (2024)** | Plus Lens Studio 5.15+ to push the Lens |
-| 📶 **One shared network** | For the PC and the Spectacles - a phone hotspot is the easiest option |
+**You need:** a DG-5F-R plugged into a Windows PC by Ethernet, Tesollo **DGManager**, **Python 3**, **Spectacles (2024)** and **Lens Studio 5.15+**.
 
 1. **Connect the robot hand:**
-   - **1.1** Plug the DG-5F-R into your PC by Ethernet and connect once in **DGManager** to confirm it works. The defaults are TCP `169.254.186.72`, port `502`, model **Delto Gripper-5F-Right**, in **Developer** mode. If yours differ, update the `gripper` section of `bridge/config.json` to match.
-   - **1.2** **Close DGManager.** The gripper only accepts one client at a time, and DGManager holds the connection while it's open.
-   - **1.3** Sanity-check the connection. This never engages the servos, so the hand can't move:
+   - Open **DGManager** and connect to the hand once to make sure it works. The usual settings are IP `169.254.186.72`, port `502`, **Developer** mode. If yours are different, change them in `bridge/config.json`.
+   - **Close DGManager.** Only one program can talk to the hand at a time.
+   - Open a terminal in the `bridge` folder and test the connection. This won't move the hand:
      ```bash
      cd path\to\SpecsGrip\bridge
      py connecttest.py
      ```
-     You should see `SEQUENCE OK` and the hand's live joint angles.
+     You should see `SEQUENCE OK`.
 
 2. **Put the PC and Spectacles on the same network:**
-   - **2.1** Join **both** the PC and the Spectacles to the same Wi-Fi. A **phone hotspot** is recommended - public and guest Wi-Fi often block devices from talking to each other, and nothing on your PC can fix that.
-   - **2.2** When Windows asks *"Allow your PC to be discoverable on this network?"*, choose **Yes**. That marks the network **Private**. (Only do this on a network you own, like your hotspot.)
-   - **2.3** In an **admin** PowerShell, allow the bridge through the firewall (one time):
+   - Connect **both** to the same Wi-Fi. A **phone hotspot** works best. Public Wi-Fi often stops devices from seeing each other.
+   - If Windows asks *"Allow your PC to be discoverable?"*, click **Yes**. Only do this on a network you trust, like your own hotspot.
+   - Open PowerShell **as admin** and run this once. It lets the Lens through your firewall:
      ```powershell
      New-NetFirewallRule -DisplayName "Delto Hand Bridge" -Direction Inbound -Protocol TCP -LocalPort 8765 -Action Allow -Profile Private
      ```
-   - **2.4** Run the network preflight. It prints the exact URL the Lens needs and flags anything that will block it:
+   - Run the network check. It shows the address to give the Lens, and warns you if something will block it:
      ```bash
      py netcheck.py
      ```
@@ -99,34 +90,32 @@
    ```bash
    py bridge.py
    ```
-   Wait for `gripper ready`. The bridge starts **DISARMED** - nothing moves until you arm it:
+   Wait for `gripper ready`. The hand won't move until you **arm** it:
 
    | Key | Action |
    | :--- | :--- |
    | **`space`** | Arm / disarm |
-   | **`n`** | Slowly return the hand to neutral |
-   | **`q`** | Quit (returns to neutral, then disconnects cleanly) |
+   | **`n`** | Move the hand back to its resting pose |
+   | **`q`** | Quit (the hand goes back to rest first) |
 
-4. **Launch the SpecsGrip Lens:**
-   - **4.1** Open `SpecsGrip.esproj` in Lens Studio.
-   - **4.2** Select the **HandBridge** object and paste the URL from `netcheck.py` into **Server Url**.
-     > ⚠️ The saved value is the author's home network address and won't work for you. You can enter several URLs separated by commas - the Lens tries each in turn, which saves re-pushing when a hotspot hands your PC a new IP.
-   - **4.3** Push the Lens to your Spectacles. You can close Lens Studio and unplug afterwards - the Lens runs on its own.
-   - **4.4** Launch it, open the **Debug Panel**, and wait for **`CONNECTED`** in green. Hold your hand up, press **`space`** on the PC to arm, and the robot hand follows you.
+4. **Launch the Lens:**
+   - Open `SpecsGrip.esproj` in Lens Studio.
+   - Click the **HandBridge** object. Paste the address from `netcheck.py` into **Server Url**.
+     > ⚠️ The address already saved there is the author's, so it won't work for you. You can add more than one address, split by commas. This helps when your hotspot gives your PC a new address.
+   - Send the Lens to your Spectacles. After that you can close Lens Studio. No cable needed.
+   - Open the Lens and check that the **Debug Panel** says **`CONNECTED`** in green. Hold up your hand, press **`space`** on the PC, and the robot follows you.
 
-   > 💡 The Lens can't connect from Lens Studio's **Preview** - Spectacles only allows its network connections on the device itself. Always test on the glasses.
+   > 💡 The Lens only connects when it runs on your Spectacles. It won't connect in Lens Studio's Preview.
 
-5. **SpecsGrip Lens:**
+5. **Settings panel:**
 
 <!-- TODO: add a screenshot of the settings panel, e.g.
 <img width="261" alt="Settings Panel" src="https://github.com/user-attachments/assets/..." />
 -->
 
-This is the Settings panel found inside the SpecsGrip Lens.
-
-- **Hand ✋ (Right / Left)**: Chooses which of your hands drives the robot. **Right** by default, which maps straight across to the right-handed DG-5F-R. **Left** works too - it's mirrored automatically so the robot moves the same way.
-- **Auto Switch Hands 🙌**: Follows whichever hand is in view. It only hands over when the current hand leaves view, so the robot doesn't jitter when both hands flicker in and out.
-- **Debug Panel 🤖**: Shows or hides the connection readout - state, server URL, packets sent, which hand is tracked, and the last error. Green means streaming, amber means connected but no hand in view, red means not connected. Keep it on while you set up.
+- **Hand ✋ (Right / Left)**: Which of your hands controls the robot. **Right** is the default. **Left** works too - the Lens flips it so the robot still moves the right way.
+- **Auto Switch Hands 🙌**: Follows whichever hand you're showing. It only switches when your current hand goes out of view.
+- **Debug Panel 🤖**: Shows or hides the status panel. 🟢 Green means it's working. 🟡 Amber means it's still connecting, or it can't see your hand. 🔴 Red means it isn't connected. The last error shows at the bottom.
 
 </details>
 
@@ -135,26 +124,24 @@ This is the Settings panel found inside the SpecsGrip Lens.
 <details close>
 <summary><b>🧪 Testing without Spectacles (For Developers)</b></summary>
 <br>
-You can exercise the whole pipeline - networking, retargeting and safety - without the glasses, and even without the robot.
 
-1. **Pipeline only, robot untouched.** `--dry-run` never opens a connection to the gripper; it prints what it *would* send:
+You can test everything on your PC, without the glasses.
+
+1. Start the bridge in test mode. It never connects to the robot. It just shows what it *would* send:
    ```bash
    py bridge.py --dry-run --auto-arm
    ```
-2. In a **second terminal**, feed it synthetic hand poses:
+2. In a **second terminal**, send it a fake hand that opens and closes:
    ```bash
    py test_sender.py --wave
    ```
-3. **Check the joint mapping on the real robot.** With `py bridge.py` running and armed, `--sweep` moves **one joint at a time** and prints its name. Watch the hand and confirm each joint is the one named - the fastest way to catch a joint moving the wrong way:
+3. To check each joint on the real robot, start `py bridge.py`, arm it, then run:
    ```bash
    py test_sender.py --sweep
    ```
-4. **Check the SDK bindings** (read-only, no connection):
-   ```bash
-   py selftest.py
-   ```
+   It moves **one joint at a time** and prints its name. This is the quickest way to spot a joint that moves the wrong way.
 
-Tuning lives in [`bridge/config.json`](bridge/config.json). See [`bridge/README.md`](bridge/README.md) for the full reference.
+All settings are in [`bridge/config.json`](bridge/config.json). The full bridge guide is in [`bridge/README.md`](bridge/README.md).
 </details>
 
 ---
@@ -175,7 +162,7 @@ Tuning lives in [`bridge/config.json`](bridge/config.json). See [`bridge/README.
 flowchart LR
   subgraph col1 [ ]
     direction TB
-    Hand["✋ Your Hand"] -->|"Tracked by cameras"| Lens["👓 Spectacles Lens<br>SpecsGrip"]
+    Hand["✋ Your Hand"] -->|"Seen by cameras"| Lens["👓 Spectacles Lens<br>SpecsGrip"]
   end
 
   subgraph col2 [ ]
@@ -185,10 +172,10 @@ flowchart LR
 
   subgraph col3 [ ]
     direction TB
-    SDK["📚 DGSDK.dll<br>(from DGManager)"] -->|"Modbus TCP"| Robot["🦾 Delto DG-5F-R"]
+    SDK["📚 Tesollo SDK<br>(from DGManager)"] -->|"Ethernet"| Robot["🦾 Delto DG-5F-R"]
   end
 
-  Lens -->|"WebSocket · 60 Hz"| Bridge
+  Lens -->|"Wi-Fi · 60 times a second"| Bridge
   Bridge -->|"20 joint angles"| SDK
 
   style col1 fill:transparent
@@ -201,90 +188,57 @@ flowchart LR
 ##
 
 <details open>
-<summary><b>📖 Technical Deep Dive</b></summary>
+<summary><b>📖 Step by Step</b></summary>
 <br>
 
-**1. Spectacles measures your hand:** <br>
+**1. Spectacles tracks your hand:** <br>
 
-Spectacles hand tracking gives the Lens 21 points on your hand: the wrist, plus every knuckle and fingertip. From those, `HandBridge.ts` builds a small coordinate frame anchored to your palm, then reads each finger against it:
+Spectacles finds 21 points on your hand: your wrist, every knuckle and every fingertip. The Lens uses them to measure three things:
 
-- 🦴 **Curl** - the angle between each pair of neighbouring finger bones.
-- ↔️ **Spread** - how far each finger swings sideways, measured flat across the palm.
-- 👍 **Thumb opposition** - how far the thumb swings across the palm towards the fingers.
+- 🦴 **Curl** - how much each finger joint is bent.
+- ↔️ **Spread** - how far each finger moves sideways.
+- 👍 **Thumb swing** - how far your thumb moves across your palm.
 
-> 💡 A left hand is a mirror image of a right hand, so its palm frame comes out flipped - uncorrected, spread and thumb opposition would drive **backwards** while curl looked perfectly fine. The Lens flips the frame for a left hand, so either hand moves the robot the same way.
+> 💡 Your left hand is a mirror image of your right. Without a fix, spread and thumb swing would move the robot backwards. The Lens flips them for your left hand, so both hands work the same way.
 ##
 
-**2. The Lens streams raw angles to your PC:** <br>
+**2. The Lens sends your hand to the PC:** <br>
 
-60 times a second, the Lens sends 20 angles - 4 per finger - as a small JSON message over a WebSocket:
-
-```json
-{
-  "t": 12345,
-  "tracked": true,
-  "hand": "right",
-  "f": [[5, 40, 12, 30], [-3, 60, 75, 40], [0, 65, 80, 45], [2, 60, 78, 40], [4, 55, 70, 35]]
-}
-```
-
-`f` holds 5 fingers (thumb → pinky), each with 4 angles in degrees.
-
-The Lens is deliberately "dumb": it only measures. Every decision about **how** your hand maps onto the robot lives on the PC, which is why you can retune everything without rebuilding the Lens.
+60 times a second, the Lens sends 20 angles (4 per finger) to the bridge over Wi-Fi. The Lens only measures. All the decisions happen on the PC. That's why you can change settings without rebuilding the Lens.
 ##
 
-**3. The bridge maps your hand onto the robot:** <br>
+**3. The bridge matches your hand to the robot:** <br>
 
-The DG-5F has 20 joints - 4 per finger, positive = curl:
+The robot has 20 joints, 4 on each finger:
 
 | Finger | Joint 1 | Joint 2 | Joint 3 | Joint 4 |
 | :--- | :--- | :--- | :--- | :--- |
-| **Thumb** (0-3) | Spread | Opposition | Base curl | Tip curl |
-| **Index** (4-7) | Spread | Base curl | Middle curl | Tip curl |
-| **Middle** (8-11) | Spread | Base curl | Middle curl | Tip curl |
-| **Ring** (12-15) | Spread | Base curl | Middle curl | Tip curl |
-| **Pinky** (16-19) | Spread | Base curl | Middle curl | Tip curl |
+| **Thumb** | Spread | Thumb swing | Base curl | Tip curl |
+| **Index** | Spread | Base curl | Middle curl | Tip curl |
+| **Middle** | Spread | Base curl | Middle curl | Tip curl |
+| **Ring** | Spread | Base curl | Middle curl | Tip curl |
+| **Pinky** | Spread | Base curl | Middle curl | Tip curl |
 
-Each of your angles is scaled into that joint's range. The limits aren't guesses: they're the minimum and maximum of the **100 factory poses** Tesollo ships for the DG-5F-R, so every limit is one the hand is known to reach.
+Each of your angles is scaled to fit the robot's joint. The joint limits come from **100 poses that Tesollo ships with the robot**, so the hand can safely reach every one.
 
-> 💡 A relaxed, flat hand always maps to the robot's neutral pose. The bridge checks this every time it starts and warns if a config edit breaks it - it's what makes "open your hand" a predictable, safe resting position.
+> 💡 An open, flat hand always puts the robot in its resting pose. So you always know where the robot goes when you relax your hand.
 ##
 
-**4. Every command passes through a safety pipeline:** <br>
+**4. Safety checks run on every move:** <br>
 
 ```mermaid
 flowchart LR
-  A["Your angles"] --> B["Scale<br>to robot range"] --> C["Clamp<br>factory limits"] --> D["Smooth<br>remove jitter"] --> E["Speed limit<br>200°/s"] --> F["🦾 Robot"]
+  A["✋ Your hand"] --> B["Scale<br>to fit robot"] --> C["Keep inside<br>safe limits"] --> D["Smooth out<br>shakes"] --> E["Limit<br>speed"] --> F["🦾 Robot"]
 ```
 
-The order matters: clamping **before** smoothing means a glitchy reading can never drag the hand outside its safe range, and the speed limit runs **last**, so it has the final say on how fast any joint moves. On top of that:
-
-- 🔒 The bridge starts **disarmed** - nothing moves until you press `space`.
-- 🧊 If packets stop for 300 ms or your hand leaves view, the robot **freezes in place** - it doesn't go limp or snap back.
-- 👋 Quitting slowly returns the hand to neutral before disconnecting.
+- 🔒 Nothing moves until you press `space`.
+- 🧊 If the connection drops or your hand leaves view, the robot **holds still**. It won't go limp or snap back.
+- 👋 When you quit, the hand slowly goes back to rest.
 ##
 
-**5. The bridge talks to the gripper through Tesollo's own SDK:** <br>
+**5. The bridge talks to the robot:** <br>
 
-Rather than reverse-engineering the gripper's protocol, the bridge drives `DGSDK.dll` - the same library DGManager itself uses - directly from Python:
-
-```mermaid
-sequenceDiagram
-  participant B as bridge.py
-  participant S as DGSDK.dll
-  participant G as DG-5F-R
-  B->>S: SetGripperSystem (IP, port, Developer mode)
-  B->>S: ConnectToGripper
-  S->>G: Modbus TCP, port 502
-  S-->>B: connected callback
-  B->>S: SetGripperOption (model DG-5F-Right)
-  B->>S: SystemStart (the Ready button in DGManager)
-  loop 60 Hz while armed
-    B->>S: MoveServoJoint (20 angles)
-  end
-```
-
-> 💡 The order is strict. The gripper's model can only be confirmed once the connection is live, so setting options **before** connecting fails with `NOT_FOUND_MODEL`. DGManager avoids this by applying them from inside its "connected" callback - the bridge does the same. `MoveServoJoint` is the real-time command that makes live teleoperation possible, and it's only available in **Developer** mode.
+The bridge uses Tesollo's own software (`DGSDK.dll`), the same one DGManager uses. It connects to the hand, presses DGManager's **Ready** button for you, then sends new joint positions 60 times a second.
 
 </details>
 
@@ -295,75 +249,59 @@ sequenceDiagram
 
 | Symptom | Things to try |
 | :--- | :--- |
-| 🧊 **Robot hand doesn't move** | The bridge starts **disarmed** - press `space`. Also check you didn't run with `--dry-run`, and that something is sending poses (the Lens or `test_sender.py`). The bridge's status line says which it is. |
-| 📂 **`can't open file ... bridge.py`** | Your terminal isn't in the `bridge` folder. `cd path\to\SpecsGrip\bridge` first, in every new terminal. |
-| 🔌 **`ConnectToGripper failed: SOCK_EXCEPTION`** | DGManager is still open - the gripper only takes one client at a time. Close it and retry. |
-| ❓ **`SetGripperOption failed: NOT_FOUND_MODEL`** | The connection to the gripper never came up. Check the Ethernet cable, then run `py connecttest.py` to see which step fails. |
-| 📵 **Debug Panel shows `CLOSED` (code 1006 or 1011)** | The Lens never reached your PC. Most often your PC's IP changed - run `py netcheck.py` and update **Server Url**. Also check the Spectacles are on the **same** network, and the firewall rule is in place. |
-| 🙈 **Won't connect in Lens Studio Preview** | Expected! The Lens can only connect from the Spectacles themselves. Push it to the glasses. |
-| 📶 **On public / guest Wi-Fi** | These networks often stop devices from seeing each other. Use a phone hotspot instead. |
-| 👻 **Lens says `CONNECTED` but the robot ignores it** | An old bridge may still be running. Check with `Get-NetTCPConnection -LocalPort 8765 -State Listen` and stop it. (The bridge now refuses to start a second copy.) |
-| 🔄 **A finger moves the wrong way** | Run `py test_sender.py --sweep` to find which joint, then swap that joint's two `out` values in `bridge/config.json`. |
-| 〰️ **Jittery movement** | Lower `smoothing_alpha` in `config.json` for smoother (slightly laggier) motion. |
-| 💥 **Movement feels too snappy** | Lower `max_deg_per_sec` in `config.json`. |
-| 🟡 **Debug Panel is amber** | Connected, but no hand in view. Hold your hand where the Spectacles can see it. |
+| 🧊 **Robot hand doesn't move** | The bridge starts **disarmed**. Press `space`. Also check you didn't start it with `--dry-run`. The bridge's status line tells you what's wrong. |
+| 📂 **`can't open file ... bridge.py`** | Your terminal isn't in the `bridge` folder. Run `cd path\to\SpecsGrip\bridge` first. |
+| 🔌 **`SOCK_EXCEPTION`** | DGManager is still open. Close it and try again. |
+| ❓ **`NOT_FOUND_MODEL`** | The PC can't reach the robot hand. Check the Ethernet cable, then run `py connecttest.py`. |
+| 📵 **Debug Panel says `CLOSED`** | The Lens can't reach your PC. Your PC's address may have changed. Run `py netcheck.py` and update **Server Url**. Also check that both devices are on the same Wi-Fi, and that you added the firewall rule. |
+| 📶 **You're on public Wi-Fi** | Public networks often stop devices from seeing each other. Use a phone hotspot. |
+| 🙈 **Won't connect in Lens Studio** | That's normal. The Lens only connects on the Spectacles. Send it to your glasses. |
+| 👻 **`cannot bind` when starting the bridge** | Another bridge is already running. Close it first. |
+| 🔄 **A finger moves the wrong way** | Run `py test_sender.py --sweep` to find the joint. Then swap its two `out` numbers in `bridge/config.json`. |
+| 〰️ **Movement is shaky or too fast** | In `config.json`, lower `smoothing_alpha` for smoother movement, or lower `max_deg_per_sec` for slower movement. |
 
 ---
 
 <a id="structure"></a>
 ## 📁 Project Structure
 
-The repo has two halves: a **Lens Studio project** (everything the Spectacles run) and the
-**bridge** folder (the Python program on your PC that drives the robot hand).
+The repo has two halves. The **Lens Studio project** runs on your Spectacles. The **bridge** folder runs on your PC and moves the robot.
 
 ```
 SpecsGrip/
-├── SpecsGrip.esproj            # Lens Studio project file (open this in Lens Studio)
+├── SpecsGrip.esproj            # open this in Lens Studio
 ├── Assets/
-│   ├── Scene.scene             # the Lens scene (HandBridge, settings panel, debug panel)
+│   ├── Scene.scene             # the Lens scene
 │   ├── Scripts/
-│   │   └── HandBridge.ts       # the core Lens script (see table below)
-│   ├── SettingsPanel_Frame.lspkg   # the in-Lens settings panel
-│   └── SpectaclesUIKit.lspkg       # Snap's UI widgets (switches, frames)
+│   │   └── HandBridge.ts       # the main Lens script
+│   ├── SettingsPanel_Frame.lspkg   # the settings panel
+│   └── SpectaclesUIKit.lspkg       # Snap's buttons and panels
 ├── Packages/
-│   └── SpectaclesInteractionKit.lspkg   # Snap's interaction framework (hand tracking)
-└── bridge/
-    ├── bridge.py               # the bridge - run this on your PC
-    ├── config.json             # all tuning: ranges, limits, smoothing, safety
-    ├── ...                     # helpers and tests (see table below)
-    └── README.md               # bridge reference: tuning, debug states, firewall details
+│   └── SpectaclesInteractionKit.lspkg   # Snap's hand tracking tools
+└── bridge/                     # the program that runs on your PC
 ```
 
-**`Assets/` - the Lens logic**
+**`Assets/` - the Lens**
 
 | Script | What it does |
 | :--- | :--- |
-| 🖐️ `HandBridge.ts` | The core. Reads your hand from Spectacles hand tracking, measures all 20 angles, and streams them to the bridge. Also handles reconnecting (cycling through multiple server URLs), left-hand mirroring, auto hand switching, the Debug Panel readout, and the settings panel's Hand and Auto Switch switches. |
-| 🎚️ `ToggleSetActive.ts` | Generic helper - wire a UI switch to it to show or hide any object. Powers the Debug Panel switch. |
+| 🖐️ `HandBridge.ts` | The main Lens script. Measures your hand, sends it to your PC, and runs the Debug Panel and hand settings. |
+| 🎚️ `ToggleSetActive.ts` | A small helper that lets a switch show or hide something. Used by the Debug Panel switch. |
 
 **`bridge/` - the PC side**
 
 | File | What it does |
 | :--- | :--- |
-| 🧠 `bridge.py` | The main program. Receives hand data, runs the safety pipeline, and commands the robot at 60 Hz. Handles arming, the signal-loss freeze, and a clean shutdown. |
-| 🔗 `dg5f.py` | Connects Python to Tesollo's `DGSDK.dll`, in the same order DGManager uses. |
-| 📐 `retarget.py` | Maps your hand onto the robot: scaling, clamping, smoothing and the speed limit. |
-| 🌐 `wsserver.py` | A tiny WebSocket server the Lens connects to - built on the standard library, so nothing to install. |
-| ⚙️ `config.json` | Every tunable value in one place. |
-| 🧪 `test_sender.py` | Fake hand poses for testing without Spectacles: `--wave`, `--sweep` (one joint at a time) and `--hold`. |
-| 📡 `netcheck.py` | Network preflight - prints the URL for the Lens and flags firewall or network problems. |
-| 🩺 `connecttest.py` | Checks the gripper connection and reads its live state, without ever moving it. |
-| 🔍 `selftest.py` | Checks the SDK loads correctly - no connection, no movement. |
-
-<a id="credits"></a>
-## 🛠️ Acknowledgement
-
-| Author | Description |
-| :--- | :--- |
-| Tesollo | Makers of the Delto DG-5F and the DGSDK this project drives |
-| Snap Inc. | Spectacles Interaction Kit and UI Kit |
-| 🤔? | Tested this project on SPECS (2026) |
-| 🤔? | Tested this project on a DG-5F-L |
+| 🧠 `bridge.py` | The main program. This is the one you run. |
+| ⚙️ `config.json` | All the settings in one place. |
+| 🔗 `dg5f.py` | Talks to Tesollo's software. |
+| 📐 `retarget.py` | Fits your hand to the robot and runs the safety checks. |
+| 🌐 `wsserver.py` | Receives your hand data from the Lens. |
+| 🧪 `test_sender.py` | Sends a fake hand, for testing without Spectacles. |
+| 📡 `netcheck.py` | Checks your network and prints the address for the Lens. |
+| 🩺 `connecttest.py` | Tests the robot connection without moving it. |
+| 🔍 `selftest.py` | Checks that Tesollo's software loads. |
+| 📄 `README.md` | The full bridge guide, with every setting explained. |
 
 ##
 
