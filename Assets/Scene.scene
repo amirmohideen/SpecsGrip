@@ -2151,7 +2151,7 @@
     {}
   ScriptInputs:
     "":
-      serverUrl: "ws://192.168.7.148:8765"
+      serverUrl: "ws://192.168.4.25:8765"
       handToTrack: right
       autoSwitchHand: false
       sendRateHz: !<float> 60.000000
@@ -2192,7 +2192,7 @@
       _knobSize: !<Vec2> {x: 3.000000, y: 3.000000}
       addCallbacks: true
       onValueChangeCallbacks:
-        - scriptComponent: !<reference.ScriptComponent> 680532ce-7a6e-4378-8821-0e086dc5491e
+        - scriptComponent: !<reference.ScriptComponent> e41d7f99-a109-4863-9d80-3626d283bdf5
           functionName: setActiveFromValue
       onFinishedCallbacks:
         []
@@ -4451,10 +4451,10 @@
     - f99b071f-6bc1-40aa-b329-cc8357a01db5: 3d84e2d8-bab2-4cee-66fc-f30b1c4f41ef
     - ffa6935f-5f20-4665-bbd2-99ab49def862: c38dffc5-9037-4832-6e26-e64c7b8aa0a4
   Name: Instructions_Frame
-  Enabled: true
+  Enabled: false
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.666428, y: -6.537224, z: -114.624924}
+    Position: {x: -0.666428, y: -43.871624, z: -114.624924}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false
@@ -4749,7 +4749,7 @@
   Enabled: true
   Layers: 1
   LocalTransform: !<TransformEntity>
-    Position: {x: -0.666428, y: 21.862564, z: -114.624924}
+    Position: {x: -0.666428, y: 25.112587, z: -114.624924}
     Rotation: {x: 0.000000, y: 0.000000, z: 0.000000}
     Scale: {x: 1.000000, y: 1.000000, z: 1.000000}
     HasSegmentScaleCompensation: false

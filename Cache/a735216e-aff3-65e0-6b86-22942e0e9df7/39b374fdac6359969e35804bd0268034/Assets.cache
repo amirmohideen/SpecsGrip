@@ -150,7 +150,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: a735216e-aff3-65e0-6b86-22942e0e9df7/39b374fdac6359969e35804bd0268034/Data/24936a5/simple_pbr.glsl
+      ShaderPath: a735216e-aff3-65e0-6b86-22942e0e9df7/39b374fdac6359969e35804bd0268034/Data/6a992e8/simple_pbr.glsl
       Defines:
         []
       Properties:

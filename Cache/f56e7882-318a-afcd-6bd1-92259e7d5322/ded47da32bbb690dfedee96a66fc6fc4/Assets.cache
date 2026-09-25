@@ -145,7 +145,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: f56e7882-318a-afcd-6bd1-92259e7d5322/ded47da32bbb690dfedee96a66fc6fc4/Data/24936a5/DefaultCapsuleShader.glsl
+      ShaderPath: f56e7882-318a-afcd-6bd1-92259e7d5322/ded47da32bbb690dfedee96a66fc6fc4/Data/6a992e8/DefaultCapsuleShader.glsl
       Defines:
         []
       Properties:

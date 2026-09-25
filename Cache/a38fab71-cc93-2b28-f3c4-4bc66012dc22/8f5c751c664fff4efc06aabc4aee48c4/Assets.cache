@@ -228,7 +228,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: a38fab71-cc93-2b28-f3c4-4bc66012dc22/8f5c751c664fff4efc06aabc4aee48c4/Data/24936a5/InteractorLineMat.glsl
+      ShaderPath: a38fab71-cc93-2b28-f3c4-4bc66012dc22/8f5c751c664fff4efc06aabc4aee48c4/Data/6a992e8/InteractorLineMat.glsl
       Defines:
         []
       Properties:

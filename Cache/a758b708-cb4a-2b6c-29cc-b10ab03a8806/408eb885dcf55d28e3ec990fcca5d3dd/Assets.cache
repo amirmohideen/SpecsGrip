@@ -976,7 +976,7 @@
             mValues:
               []
         ShaderType: Mesh3d
-      ShaderPath: a758b708-cb4a-2b6c-29cc-b10ab03a8806/408eb885dcf55d28e3ec990fcca5d3dd/Data/24936a5/Slider.glsl
+      ShaderPath: a758b708-cb4a-2b6c-29cc-b10ab03a8806/408eb885dcf55d28e3ec990fcca5d3dd/Data/6a992e8/Slider.glsl
       Defines:
         []
       Properties:
