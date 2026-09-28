@@ -1,6 +1,6 @@
 """
 Preflight for the Lens connection. Run this after joining a new network
-(hotspot, different Wi-Fi) -- your IP changes, and the Lens URL must follow.
+(e.g. a different Wi-Fi) -- your IP changes, and the Lens URL must follow.
 
 Prints the exact ws:// URL to paste into the Lens, and flags the two things
 that silently break the connection: a Block firewall rule, and a network still
@@ -129,5 +129,5 @@ if candidates:
         print("  Block beats Allow in Windows Firewall -- adding an allow rule will")
         print("  not help while the network is on that profile.")
 else:
-    print("  No usable LAN address found. Join a Wi-Fi network or start your hotspot.")
+    print("  No usable LAN address found. Join a private Wi-Fi network.")
 print("=" * 66)

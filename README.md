@@ -71,7 +71,7 @@
 | 💻 **Windows PC** | With Tesollo **DGManager** installed (the bridge uses the `DGSDK.dll` that ships inside it) |
 | 🐍 **Python 3** | Tested on 3.13. Standard library only |
 | 👓 **Spectacles (2024)** | Plus Lens Studio 5.15+ to push the Lens |
-| 📶 **One shared network** | For the PC and the Spectacles - a phone hotspot is the easiest option |
+| 📶 **One shared network** | For the PC and the Spectacles - make sure it's a private Wi-Fi network |
 
 1. **Connect the robot hand:**
    - **1.1** Plug the DG-5F-R into your PC by Ethernet and connect once in **DGManager** to confirm it works. The defaults are TCP `169.254.186.72`, port `502`, model **Delto Gripper-5F-Right**, in **Developer** mode. If yours differ, update the `gripper` section of `bridge/config.json` to match.
@@ -84,8 +84,8 @@
      You should see `SEQUENCE OK` and the hand's live joint angles.
 
 2. **Put the PC and Spectacles on the same network:**
-   - **2.1** Join **both** the PC and the Spectacles to the same Wi-Fi. A **phone hotspot** is recommended - public and guest Wi-Fi often block devices from talking to each other, and nothing on your PC can fix that.
-   - **2.2** When Windows asks *"Allow your PC to be discoverable on this network?"*, choose **Yes**. That marks the network **Private**. (Only do this on a network you own, like your hotspot.)
+   - **2.1** Join **both** the PC and the Spectacles to the same Wi-Fi. Make sure you use a **private Wi-Fi** network - public and guest Wi-Fi often block devices from talking to each other, and nothing on your PC can fix that.
+   - **2.2** When Windows asks *"Allow your PC to be discoverable on this network?"*, choose **Yes**. That marks the network **Private**. (Only do this on a network you own, like your home Wi-Fi.)
    - **2.3** In an **admin** PowerShell, allow the bridge through the firewall (one time):
      ```powershell
      New-NetFirewallRule -DisplayName "Delto Hand Bridge" -Direction Inbound -Protocol TCP -LocalPort 8765 -Action Allow -Profile Private
@@ -110,7 +110,7 @@
 4. **Launch the SpecsGrip Lens:**
    - **4.1** Open `SpecsGrip.esproj` in Lens Studio.
    - **4.2** Select the **HandBridge** object and paste the URL from `netcheck.py` into **Server Url**.
-     > ⚠️ The saved value is the author's home network address and won't work for you. You can enter several URLs separated by commas - the Lens tries each in turn, which saves re-pushing when a hotspot hands your PC a new IP.
+     > ⚠️ The saved value is the author's home network address and won't work for you. You can enter several URLs separated by commas - the Lens tries each in turn, which saves re-pushing when your PC gets a new IP.
    - **4.3** Push the Lens to your Spectacles. You can close Lens Studio and unplug afterwards - the Lens runs on its own.
    - **4.4** Launch it, open the **Debug Panel**, and wait for **`CONNECTED`** in green. Hold your hand up, press **`space`** on the PC to arm, and the robot hand follows you.
 
@@ -301,7 +301,7 @@ sequenceDiagram
 | ❓ **`SetGripperOption failed: NOT_FOUND_MODEL`** | The connection to the gripper never came up. Check the Ethernet cable, then run `py connecttest.py` to see which step fails. |
 | 📵 **Debug Panel shows `CLOSED` (code 1006 or 1011)** | The Lens never reached your PC. Most often your PC's IP changed - run `py netcheck.py` and update **Server Url**. Also check the Spectacles are on the **same** network, and the firewall rule is in place. |
 | 🙈 **Won't connect in Lens Studio Preview** | Expected! The Lens can only connect from the Spectacles themselves. Push it to the glasses. |
-| 📶 **On public / guest Wi-Fi** | These networks often stop devices from seeing each other. Use a phone hotspot instead. |
+| 📶 **On public / guest Wi-Fi** | These networks often stop devices from seeing each other. Use a private Wi-Fi network instead. |
 | 👻 **Lens says `CONNECTED` but the robot ignores it** | An old bridge may still be running. Check with `Get-NetTCPConnection -LocalPort 8765 -State Listen` and stop it. (The bridge now refuses to start a second copy.) |
 | 🔄 **A finger moves the wrong way** | Run `py test_sender.py --sweep` to find which joint, then swap that joint's two `out` values in `bridge/config.json`. |
 | 〰️ **Jittery movement** | Lower `smoothing_alpha` in `config.json` for smoother (slightly laggier) motion. |

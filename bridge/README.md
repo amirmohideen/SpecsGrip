@@ -75,7 +75,7 @@ Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4 | Select-Object IPAdd
 3. Add a Scene Object, add `HandBridge.ts` to it as a Script component.
 4. In the Inspector set **Server Url** to `ws://<your-wifi-ip>:8765`. It accepts a
    comma-separated list and rotates through them on retry, which saves re-pushing
-   every time a hotspot reassigns your IP.
+   every time your PC's IP changes.
 5. Assign **Status Text** (see the HUD section below) — worth it.
 6. Tick **Debug Log** while bringing it up.
 
@@ -92,7 +92,7 @@ opposition, 5 joints — would drive backwards. The Lens flips the normal for a 
 hand so either hand produces the same robot motion and `config.json` stays tuned once.
 The HUD shows `mirrored` when it is active.
 
-Spectacles and the PC must be on the **same Wi-Fi network**.
+Spectacles and the PC must be on the **same private Wi-Fi network**.
 
 ### 3. Bring it up — in this order
 
