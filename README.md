@@ -122,9 +122,13 @@ https://github.com/user-attachments/assets/089905e0-afa3-4d06-90e4-105c6f981827
 
 This is the Settings panel found inside the SpecsGrip Lens.
 
+<img width="435" height="347" alt="Screenshot 2026-09-29 at 2 30 35 PM" src="https://github.com/user-attachments/assets/4f99575a-bd73-4b17-ae38-941eb0feb260" />
+
 - **Hand ✋ (Right / Left)**: Chooses which of your hands drives the robot. **Right** by default, which maps straight across to the right-handed DG-5F-R. **Left** works too - it's mirrored automatically so the robot moves the same way.
 - **Auto Switch Hands 🙌**: Follows whichever hand is in view. It only hands over when the current hand leaves view, so the robot doesn't jitter when both hands flicker in and out.
 - **Debug Panel 🤖**: Shows or hides the connection readout - state, server URL, packets sent, which hand is tracked, and the last error. Green means streaming, amber means connected but no hand in view, red means not connected. Keep it on while you set up.
+
+<img width="570" height="327" alt="Screenshot 2026-09-29 at 2 31 52 PM" src="https://github.com/user-attachments/assets/4bdd2ffe-ce04-4c40-bbc8-81b6fe5581d8" />
 
 </details>
 
