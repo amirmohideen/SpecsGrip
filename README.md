@@ -20,9 +20,7 @@
 </p>
 -->
 
-<!-- TODO: add the demo video (drag the file into a GitHub issue/PR box to get a user-attachments URL), e.g.
-<video src="https://github.com/user-attachments/assets/..." width="300" controls></video>
--->
+https://github.com/user-attachments/assets/089905e0-afa3-4d06-90e4-105c6f981827
 
 ---
 
@@ -354,18 +352,6 @@ SpecsGrip/
 | 📡 `netcheck.py` | Network preflight - prints the URL for the Lens and flags firewall or network problems. |
 | 🩺 `connecttest.py` | Checks the gripper connection and reads its live state, without ever moving it. |
 | 🔍 `selftest.py` | Checks the SDK loads correctly - no connection, no movement. |
-
-<a id="credits"></a>
-## 🛠️ Acknowledgement
-
-| Author | Description |
-| :--- | :--- |
-| Tesollo | Makers of the Delto DG-5F and the DGSDK this project drives |
-| Snap Inc. | Spectacles Interaction Kit and UI Kit |
-| 🤔? | Tested this project on SPECS (2026) |
-| 🤔? | Tested this project on a DG-5F-L |
-
-##
 
 <p align="center">
   <i>This project is open source - contributions, forks and stars welcome.</i> 🤝
