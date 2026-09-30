@@ -14,11 +14,10 @@
   <a href="#structure">📁 Project Structure</a>
 </p>
 
-<!-- TODO: add an icon, e.g.
-<p align="center">
-  <img src="icon.png" alt="SpecsGrip icon" width="100" />
-</p>
--->
+
+<!-- <p align="center">
+  <img width="100" height="100" alt="icon" src="https://github.com/user-attachments/assets/ebe34e99-afb9-4ef6-88b3-f86fde0a98a0" />
+</p> -->
 
 https://github.com/user-attachments/assets/089905e0-afa3-4d06-90e4-105c6f981827
 
