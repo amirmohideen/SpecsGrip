@@ -1,4 +1,4 @@
-<h1 align="center">🦾 SpecsGrip</h1>
+<h1 align="center">😎 SpecsGrip ✊</h1>
 
 <p align="center">
   Control a <b>Tesollo Delto DG-5F robot hand</b> with your bare hands through <b>Snap Spectacles!</b><br>
