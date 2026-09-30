@@ -110,23 +110,20 @@ https://github.com/user-attachments/assets/089905e0-afa3-4d06-90e4-105c6f981827
    - **4.2** Select the **HandBridge** object and paste the URL from `netcheck.py` into **Server Url**.
      > ⚠️ The saved value is the author's home network address and won't work for you. You can enter several URLs separated by commas - the Lens tries each in turn, which saves re-pushing when your PC gets a new IP.
    - **4.3** Push the Lens to your Spectacles. You can close Lens Studio and unplug afterwards - the Lens runs on its own.
-   - **4.4** Launch it, open the **Debug Panel**, and wait for **`CONNECTED`** in green. Hold your hand up, press **`space`** on the PC to arm, and the robot hand follows you.
+   - **4.4** Launch it and wait for **`CONNECTED`** in green on the **Debug Panel** (it's on by default). Hold your hand up, press **`space`** on the PC to arm, and the robot hand follows you.
 
    > 💡 The Lens can't connect from Lens Studio's **Preview** - Spectacles only allows its network connections on the device itself. Always test on the glasses.
 
 5. **SpecsGrip Lens:**
 
-<!-- TODO: add a screenshot of the settings panel, e.g.
-<img width="261" alt="Settings Panel" src="https://github.com/user-attachments/assets/..." />
--->
-
 This is the Settings panel found inside the SpecsGrip Lens.
 
 <img width="435" height="347" alt="Screenshot 2026-09-29 at 2 30 35 PM" src="https://github.com/user-attachments/assets/4f99575a-bd73-4b17-ae38-941eb0feb260" />
 
-- **Hand ✋ (Right / Left)**: Chooses which of your hands drives the robot. **Right** by default, which maps straight across to the right-handed DG-5F-R. **Left** works too - it's mirrored automatically so the robot moves the same way.
-- **Auto Switch Hands 🙌**: Follows whichever hand is in view. It only hands over when the current hand leaves view, so the robot doesn't jitter when both hands flicker in and out.
-- **Debug Panel 🤖**: Shows or hides the connection readout - state, server URL, packets sent, which hand is tracked, and the last error. Green means streaming, amber means connected but no hand in view, red means not connected. Keep it on while you set up.
+- **Hand Track ✋ (Left / Right)**: Chooses which of your hands drives the robot. **Right** by default, which maps straight across to the right-handed DG-5F-R. **Left** works too - it's mirrored automatically so the robot moves the same way.
+- **Hand Track Auto Switch 🙌**: Follows whichever hand is in view. It only hands over when the current hand leaves view, so the robot doesn't jitter when both hands flicker in and out. **Off** by default - turn it back off and the robot returns to the hand chosen in **Hand Track ✋**.
+- **Debug Panel 🤖**: Shows or hides the connection readout - state, server URL, packets sent, which hand is tracked, and the last error. Green means streaming, amber means connected but no hand in view, red means not connected. **On** by default - keep it on while you set up.
+- **Instructions 🤝**: Shows or hides a quick setup checklist - the robot hand is powered on, **Server Url** has your PC's address, and the PC and Spectacles are on the same network - plus a link back to this repo. **Off** by default.
 
 <img width="570" height="327" alt="Screenshot 2026-09-29 at 2 31 52 PM" src="https://github.com/user-attachments/assets/4bdd2ffe-ce04-4c40-bbc8-81b6fe5581d8" />
 
@@ -322,10 +319,10 @@ The repo has two halves: a **Lens Studio project** (everything the Spectacles ru
 SpecsGrip/
 ├── SpecsGrip.esproj            # Lens Studio project file (open this in Lens Studio)
 ├── Assets/
-│   ├── Scene.scene             # the Lens scene (HandBridge, settings panel, debug panel)
+│   ├── Scene.scene             # the Lens scene (HandBridge, settings, debug and instructions panels)
 │   ├── Scripts/
 │   │   └── HandBridge.ts       # the core Lens script (see table below)
-│   ├── SettingsPanel_Frame.lspkg   # the in-Lens settings panel
+│   ├── SettingsPanel_Frame.lspkg   # the in-Lens settings panel, plus ToggleSetActive.ts
 │   └── SpectaclesUIKit.lspkg       # Snap's UI widgets (switches, frames)
 ├── Packages/
 │   └── SpectaclesInteractionKit.lspkg   # Snap's interaction framework (hand tracking)
@@ -340,8 +337,8 @@ SpecsGrip/
 
 | Script | What it does |
 | :--- | :--- |
-| 🖐️ `HandBridge.ts` | The core. Reads your hand from Spectacles hand tracking, measures all 20 angles, and streams them to the bridge. Also handles reconnecting (cycling through multiple server URLs), left-hand mirroring, auto hand switching, the Debug Panel readout, and the settings panel's Hand and Auto Switch switches. |
-| 🎚️ `ToggleSetActive.ts` | Generic helper - wire a UI switch to it to show or hide any object. Powers the Debug Panel switch. |
+| 🖐️ `HandBridge.ts` | The core. Reads your hand from Spectacles hand tracking, measures all 20 angles, and streams them to the bridge. Also handles reconnecting (cycling through multiple server URLs), left-hand mirroring, auto hand switching, the Debug Panel readout, and the settings panel's Hand Track and Hand Track Auto Switch switches (through its public `toggleHandToTrack` and `toggleAutoSwitchHand` functions). |
+| 🎚️ `ToggleSetActive.ts` | Generic helper in `SettingsPanel_Frame.lspkg/Scripts/` - wire a UI switch to it to show or hide any object. Powers the Debug Panel and Instructions switches, and highlights Left or Right on the Hand Track switch. |
 
 **`bridge/` - the PC side**
 

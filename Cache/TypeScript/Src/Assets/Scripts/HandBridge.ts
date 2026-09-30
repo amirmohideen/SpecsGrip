@@ -53,7 +53,7 @@ const COLOR_BAD = new vec4(1.0, 0.35, 0.35, 1.0)
 @component
 export class HandBridge extends BaseScriptComponent {
   @input
-  @hint("Bridge address(es). Comma-separate several and the Lens cycles through them on each retry -- useful because a phone hotspot hands out a new IP every so often. Run 'py netcheck.py' on the PC for the current one.")
+  @hint("Bridge address(es). Comma-separate several and the Lens cycles through them on each retry -- useful because the network can hand the PC a new IP every so often. Run 'py netcheck.py' on the PC for the current one.")
   serverUrl: string = "ws://192.168.7.148:8765, ws://192.168.124.7:8765"
 
   @input
@@ -119,7 +119,7 @@ export class HandBridge extends BaseScriptComponent {
     }
     this.moduleOk = true
 
-    // A hotspot reassigns the PC's IP fairly often, and re-pushing a Lens just
+    // The network can reassign the PC's IP, and re-pushing a Lens just
     // to change one string is slow. Accept several and rotate on each retry.
     this.urls = this.serverUrl
       .split(",")
@@ -260,7 +260,7 @@ export class HandBridge extends BaseScriptComponent {
         // 1006 = abnormal close: no close frame. Almost always "never actually
         // reached the server" -- wrong IP, firewall, or client isolation.
         this.lastError = event.code === 1006
-          ? "1006 abnormal: never reached the PC (IP? firewall? hotspot isolation?)"
+          ? "1006 abnormal: never reached the PC (IP? firewall? Wi-Fi client isolation?)"
           : `closed, code ${event.code}`
         this.state = "CLOSED"
         this.scheduleRetry()

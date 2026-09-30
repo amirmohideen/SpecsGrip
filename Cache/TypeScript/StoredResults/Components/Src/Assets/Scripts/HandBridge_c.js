@@ -12,7 +12,7 @@ function checkUndefined(property, showIfData) {
         throw new Error("Input " + property + " was not provided for the object " + script.getSceneObject().name);
     }
 }
-// @input string serverUrl = "ws://192.168.7.148:8765, ws://192.168.124.7:8765" {"hint":"Bridge address(es). Comma-separate several and the Lens cycles through them on each retry -- useful because a phone hotspot hands out a new IP every so often. Run 'py netcheck.py' on the PC for the current one."}
+// @input string serverUrl = "ws://192.168.7.148:8765, ws://192.168.124.7:8765" {"hint":"Bridge address(es). Comma-separate several and the Lens cycles through them on each retry -- useful because the network can hand the PC a new IP every so often. Run 'py netcheck.py' on the PC for the current one."}
 // @input string handToTrack = "right" {"hint":"Which of YOUR hands drives the robot. The robot is a DG-5F-R (right hand), so 'right' maps straight across; 'left' is mirrored automatically.", "widget":"combobox", "values":[{"label":"right", "value":"right"}, {"label":"left", "value":"left"}]}
 // @input bool autoSwitchHand {"hint":"Tick to follow whichever hand is visible, switching automatically. The hand above is only the starting preference. Left-hand input is mirrored so the robot moves the same way either way."}
 // @input float sendRateHz = 60 {"hint":"Send rate in Hz. 60 matches the bridge's default control loop."}

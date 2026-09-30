@@ -178,7 +178,7 @@ let HandBridge = (() => {
                 return;
             }
             this.moduleOk = true;
-            // A hotspot reassigns the PC's IP fairly often, and re-pushing a Lens just
+            // The network can reassign the PC's IP, and re-pushing a Lens just
             // to change one string is slow. Accept several and rotate on each retry.
             this.urls = this.serverUrl
                 .split(",")
@@ -309,7 +309,7 @@ let HandBridge = (() => {
                     // 1006 = abnormal close: no close frame. Almost always "never actually
                     // reached the server" -- wrong IP, firewall, or client isolation.
                     this.lastError = event.code === 1006
-                        ? "1006 abnormal: never reached the PC (IP? firewall? hotspot isolation?)"
+                        ? "1006 abnormal: never reached the PC (IP? firewall? Wi-Fi client isolation?)"
                         : `closed, code ${event.code}`;
                     this.state = "CLOSED";
                     this.scheduleRetry();
