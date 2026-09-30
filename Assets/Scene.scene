@@ -3866,9 +3866,9 @@
   Text: |-
     1. Make sure Delto Gripper DG-5F is on
     
-    2. Make sure ip address set in HandBridge.ts is correct
+    2. Make sure ip address set in 'HandBridge.ts' is correct
     
-    3. Make sure PC server and Specs are on same network  For full info:  https://github.com/amirmohideen/SpecsGrip
+    3. Make sure PC server and Specs are on same WiFi  For full instructions:  https://github.com/amirmohideen/SpecsGrip
   Editable: false
   ShowEditingPreview: true
   TouchHandler: !<reference> 00000000-0000-0000-0000-000000000000

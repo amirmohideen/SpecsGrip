@@ -68,16 +68,19 @@ Confirm your Wi-Fi IP hasn't changed (DHCP moves it):
 Get-NetIPAddress -InterfaceAlias Wi-Fi -AddressFamily IPv4 | Select-Object IPAddress
 ```
 
-### 2. Add the script to the Lens
+### 2. Point the Lens at this PC
 
-1. Open the project in Lens Studio.
-2. The script is already at `Assets/Scripts/HandBridge.ts`.
-3. Add a Scene Object, add `HandBridge.ts` to it as a Script component.
-4. In the Inspector set **Server Url** to `ws://<your-wifi-ip>:8765`. It accepts a
-   comma-separated list and rotates through them on retry, which saves re-pushing
-   every time your PC's IP changes.
-5. Assign **Status Text** (see the HUD section below) — worth it.
-6. Tick **Debug Log** while bringing it up.
+The scene already has a **HandBridge** object running `Assets/Scripts/HandBridge.ts`,
+with **Status Text** wired to the Debug Panel and the hand settings wired to the
+Settings panel switches. **Don't add another one.** The bridge accepts every Lens
+connection and moves the robot to whichever packet arrived last, so a second copy
+would fight the first for control.
+
+1. Open `SpecsGrip.esproj` in Lens Studio.
+2. Select the **HandBridge** object and set **Server Url** to `ws://<your-wifi-ip>:8765`
+   (`py netcheck.py` prints the exact URL). It accepts a comma-separated list and
+   rotates through them on retry, which saves re-pushing every time your PC's IP changes.
+3. Tick **Debug Log** while bringing it up.
 
 ### Which hand drives it
 
@@ -181,9 +184,9 @@ the safe band; the slew limit runs last so it's the final authority on speed.
 ## Reading the on-device HUD
 
 The Logger panel only works while tethered to Lens Studio, so the Lens draws its own
-status. Assign a `Text` component to the script's **Status Text** input (park it under
-the Camera so it follows your view). It shows state, URL, attempt count, packets sent,
-tracking state and the last error.
+status in the **Debug Panel**. It's already wired up: the panel's text is assigned to
+HandBridge's **Status Text** input, and the panel follows your view. It shows state,
+URL, attempt count, packets sent, tracking state and the last error.
 
 | HUD state | What it means | Where to look |
 |---|---|---|
