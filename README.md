@@ -354,5 +354,6 @@ SpecsGrip/
 | 🔍 `selftest.py` | Checks the SDK loads correctly - no connection, no movement. |
 
 <p align="center">
-  <i>This project is open source - contributions, forks and stars welcome.</i> 🤝
+  <i>This project is open source under the <a href="LICENSE">MIT License</a> - contributions, forks and stars welcome.</i> 🤝<br>
+  <sub>Snap's Spectacles Interaction Kit and Spectacles UI Kit packages are included for convenience and remain under Snap's own terms.</sub>
 </p>
