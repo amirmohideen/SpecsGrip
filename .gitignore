@@ -16,3 +16,7 @@ Workspaces/**
 *.lock
 
 # Shipped by Lens Studio
+
+# Python bytecode from running the bridge
+__pycache__/
+*.pyc
