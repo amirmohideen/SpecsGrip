@@ -353,7 +353,12 @@ SpecsGrip/
 | 🩺 `connecttest.py` | Checks the gripper connection and reads its live state, without ever moving it. |
 | 🔍 `selftest.py` | Checks the SDK loads correctly - no connection, no movement. |
 
-<p align="center">
-  <i>This project is open source under the <a href="LICENSE">MIT License</a> - contributions, forks and stars welcome.</i> 🤝<br>
-  <sub>Snap's Spectacles Interaction Kit and Spectacles UI Kit packages are included for convenience and remain under Snap's own terms.</sub>
-</p>
+<a id="license"></a>
+## 📄 License & Credits
+
+<i>Distributed under <a href="LICENSE">MIT License</a> - contributions, forks and stars welcome.</i> 🤝<br>
+
+Created by <a href="https://github.com/amirmohideen">Amir Mohideen Basheer Khan</a> <br>
+
+📁 [<a href="https://github.com/amirmohideen">Source Repo</a>](https://github.com/amirmohideen/SpecsGrip)
+
